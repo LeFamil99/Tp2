@@ -213,7 +213,8 @@ public class Niveau {
                         targetX = 1;
                         break;
                 }
-                personnage.bouger(targetX, targetY);
+                if(grille[personnage.getY() + targetY][personnage.getX() + targetX].getPeutMarcherDessus())
+                    personnage.bouger(targetX, targetY);
             }
         } while (commande != 'q');
 

@@ -29,4 +29,8 @@ public abstract class Tuile {
     public char getSymbole() {
         return symbole;
     }
+
+    public boolean isPeutMarcherDessus() {
+        return peutMarcherDessus;
+    }
 }
