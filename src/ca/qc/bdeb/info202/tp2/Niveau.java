@@ -1,7 +1,7 @@
 package ca.qc.bdeb.info202.tp2;
 
 import ca.qc.bdeb.info202.tp2.objets.CristalMagique;
-import ca.qc.bdeb.info202.tp2.objets.Objet;
+import ca.qc.bdeb.info202.tp2.objets.Item;
 import ca.qc.bdeb.info202.tp2.objets.PotionForce;
 import ca.qc.bdeb.info202.tp2.objets.PotionVie;
 import ca.qc.bdeb.info202.tp2.personnages.Aldez;
@@ -18,7 +18,7 @@ public class Niveau {
     private Tuile[][] grille;
     private Aldez personnage;
     private ArrayList<Monstre> monstres;
-    private ArrayList<Objet> objets;
+    private ArrayList<Item> objets;
     private int niveau;
 
     public Niveau(String fichier) {

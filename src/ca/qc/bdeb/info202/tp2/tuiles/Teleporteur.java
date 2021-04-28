@@ -12,6 +12,6 @@ public class Teleporteur extends Tuile {
 
     @Override
     public void action() {
-        
+
     }
 }
