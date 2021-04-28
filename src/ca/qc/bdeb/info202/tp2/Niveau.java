@@ -17,11 +17,11 @@ public class Niveau {
     // TUILLES NE POINTE PAS AUX OCCUPANTS.
 
     private Tuile[][] grille;
-    private Aldez personnage;
+    private Aldez aldez;
     private ArrayList<Monstre> monstres;
     private ArrayList<Item> objets;
     private int niveau;
-    private final char[] COMMANDES_POSSIBLES = {'w', 'a', 's', 'd', 'c', 'x', 'q'};
+    //private final char[] COMMANDES_POSSIBLES = {'w', 'a', 's', 'd', 'c', 'x', 'q'};
     private final int[][] CASES_INTERAGISSABLES = {
             {-1, -1},
             {0, -1},
@@ -34,11 +34,12 @@ public class Niveau {
             {1, 1},
     };
 
-    public Niveau(String fichier, Aldez a) {
+    public Niveau(Aldez a) {
         this.monstres = new ArrayList<>();
         this.objets = new ArrayList<>();
-        this.personnage = a;
-        chargerNiveau(fichier);
+        this.aldez = a;
+        niveau = 1;
+        chargerNiveau(niveau + ".txt");
 
     }
 
@@ -52,6 +53,7 @@ public class Niveau {
         /* Les monstres et aldez ne sont pas ajoute dans la grille, a la place, il faudra les inserer apres les
          * avoir bouger et avant des des afficher, pour ensuite les retirers. Cela permet de facilement les afficher
          * avec le moins de modification a la grille possible. */
+
 
         ArrayList<Tuile[]> grille = new ArrayList<>();
 
@@ -125,7 +127,7 @@ public class Niveau {
                 if (donnees.length == 1) {
                     /* Personnage */
                     String[] parametres = donnees[0].split(",");
-                    this.personnage.repositionner(Integer.parseInt(parametres[0]),
+                    this.aldez.repositionner(Integer.parseInt(parametres[0]),
                             Integer.parseInt(parametres[1]));
                 } else if (donnees[0].equalsIgnoreCase("monstre")) {
                     /* Monstre */
@@ -134,7 +136,10 @@ public class Niveau {
                             Integer.parseInt(parametres[2]), Integer.parseInt(parametres[3])));
                 } else {
                     /* Rempli la case avec le nom, et puis les parametres */
-                    String[] parametres = donnees[1].split(",");
+                    String[] parametres = donnees[1].replace(", ", "/$%").split(",");
+                    for(int i = 0; i < parametres.length; i++)
+                        parametres [i] = parametres[i].replace("/$%", ", ");
+
                     String[] caseImportante = new String[parametres.length + 1];
                     for (int i = 0; i < caseImportante.length; i++) {
                         if (i == 0) {
@@ -193,9 +198,10 @@ public class Niveau {
 
     public void jouer() {
         char commande = 'a';
+        boolean quitter = false;
         Scanner scanner = new Scanner(System.in);
         do {
-            System.out.println("Vies: " + personnage.getPointVie() + "/" + Aldez.getVieMaximale());
+            System.out.println("Vies: " + aldez.getPointVie() + "/" + Aldez.getVieMaximale() + "\t\t\tForce: " + aldez.getPointForce() + "\t\t\tCrystaux: " + aldez.getNbreCristaux());
             afficherGrille();
             boolean erreur = false;
 
@@ -204,9 +210,9 @@ public class Niveau {
             String rawCommand = scanner.nextLine();
             erreur = rawCommand.isEmpty();
             if(erreur) {
-                System.out.println("Erreur: Commade invalide");
+                System.out.println("Erreur: la commande ne peut pas être vide");
             } else {
-                for(int i = 0; i < rawCommand.length(); i++) {
+                for(int i = 0; i < rawCommand.length() && !quitter; i++) {
                     commande = rawCommand.charAt(i);
                     int targetX = 0;
                     int targetY = 0;
@@ -228,27 +234,36 @@ public class Niveau {
                             break;
 
                         case 'c':
-                            int persoX = personnage.getX();
-                            int persoY = personnage.getY();
+                            int persoX = aldez.getX();
+                            int persoY = aldez.getY();
                             for(int j = 0; j < CASES_INTERAGISSABLES.length; j++) {
                                 int interactionX = CASES_INTERAGISSABLES[j][0] + persoX;
                                 int interactionY = CASES_INTERAGISSABLES[j][1] + persoY;
                                 if(grille[interactionY][interactionX].isPeutInteragir()) {
-                                    grille[interactionY][interactionX].action(personnage);
+                                    grille[interactionY][interactionX].action(aldez);
                                 }
                             }
                             break;
 
+                        case 'q':
+                            quitter = true;
+                            break;
+
                     }
-                    if(grille[personnage.getY() + targetY][personnage.getX() + targetX].getPeutMarcherDessus())
-                        personnage.bouger(targetX, targetY);
-                    for(Monstre monstre : monstres) {
-                        monstre.deplacer(personnage, grille);
+                    if(grille[aldez.getY() + targetY][aldez.getX() + targetX].getPeutMarcherDessus())
+                        aldez.bouger(targetX, targetY);
+
+                    for(Monstre monstre : monstres)
+                        monstre.deplacer(aldez, grille);
+
+                    if(aldez.getNbreCristaux() == niveau) {
+                        System.out.println("Bravo! Vous avez trouvé le crystal magique! Vous passez au niveau " + niveau++ + ".");
+                        chargerNiveau(niveau + ".txt");
                     }
                 }
 
             }
-        } while (commande != 'q');
+        } while (!quitter);
 
     }
 
@@ -256,8 +271,8 @@ public class Niveau {
         for(int i = 0; i < grille.length; i++) {
             for(int j = 0; j < grille[i].length; j++) {
                 boolean entiteDessus = false;
-                if(personnage.getX() == j && personnage.getY() == i) {
-                    System.out.print(personnage.getSymbole());
+                if(aldez.getX() == j && aldez.getY() == i) {
+                    System.out.print(aldez.getSymbole());
                     entiteDessus = true;
                 } else {
                     for(Monstre monstre : monstres) {
