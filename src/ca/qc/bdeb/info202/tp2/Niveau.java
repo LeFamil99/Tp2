@@ -10,6 +10,7 @@ import ca.qc.bdeb.info202.tp2.tuiles.*;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Niveau {
 
@@ -178,6 +179,12 @@ public class Niveau {
 
     public void jouer() {
         afficher();
+        Scanner scanner = new Scanner(System.in);
+        boolean erreur = false;
+        do {
+            System.out.println("Veuillez entrer la commande: ");
+        }
+
     }
 
     private void afficher () {

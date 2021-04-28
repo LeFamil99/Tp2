@@ -35,4 +35,9 @@ public abstract class Entite {
     public char getSymbole() {
         return symbole;
     }
+
+    public void bouger (int x, int y) {
+        this.x += x;
+        this.y += y;
+    }
 }
