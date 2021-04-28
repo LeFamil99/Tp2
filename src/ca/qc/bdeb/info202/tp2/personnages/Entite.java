@@ -1,11 +1,11 @@
 package ca.qc.bdeb.info202.tp2.personnages;
 
 public abstract class Entite {
-    private int x;
-    private int y;
-    private int pointVie;
-    private int pointForce;
-    private char symbole;
+    protected int x;
+    protected int y;
+    protected int pointVie;
+    protected int pointForce;
+    protected char symbole;
 
 
     public Entite(int x, int y, int vie, int force, char symbole) {
