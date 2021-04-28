@@ -13,7 +13,10 @@ public class Tresor extends Tuile {
 
     @Override
     public void action(Aldez aldez) {
-
+        if(!estOuvert) {
+            estOuvert = true;
+            aldez.utiliserItem(obj);
+        }
     }
 
     @Override

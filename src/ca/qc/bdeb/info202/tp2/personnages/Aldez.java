@@ -6,8 +6,8 @@ import ca.qc.bdeb.info202.tp2.objets.PotionVie;
 
 public class Aldez extends Entite {
 
-    private static final int VIE_MAXIMALE = 6;
-    private static final int ATTAQUE_INITIALE = 1;
+    private final static int VIE_MAXIMALE = 6;
+    private final static int ATTAQUE_INITIALE = 1;
 
     private int nbreCristaux = 0;
 
@@ -28,16 +28,23 @@ public class Aldez extends Entite {
 
     private void boirePotionDeVie() {
         this.pointVie = VIE_MAXIMALE;
+        System.out.println(pointVie);
     }
 
     private void boirePotionDeForce() {
         this.pointForce++;
+        System.out.println(pointForce);
     }
 
     private void utiliserCristal() {
         this.nbreCristaux++;
     }
 
+    public static int getVieMaximale() {
+        return VIE_MAXIMALE;
+    }
 
-
+    public int getNbreCristaux() {
+        return nbreCristaux;
+    }
 }

@@ -50,4 +50,6 @@ public abstract class Entite {
         this.x += x;
         this.y += y;
     }
+
+
 }

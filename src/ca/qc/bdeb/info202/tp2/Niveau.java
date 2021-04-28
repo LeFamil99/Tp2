@@ -10,7 +10,6 @@ import ca.qc.bdeb.info202.tp2.tuiles.*;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class Niveau {
@@ -196,7 +195,8 @@ public class Niveau {
         char commande = 'a';
         Scanner scanner = new Scanner(System.in);
         do {
-            afficher();
+            System.out.println("Vies: " + personnage.getPointVie() + "/" + Aldez.getVieMaximale());
+            afficherGrille();
             boolean erreur = false;
 
             System.out.println("Veuillez entrer la commande: ");
@@ -206,47 +206,53 @@ public class Niveau {
             if(erreur) {
                 System.out.println("Erreur: Commade invalide");
             } else {
-                commande = rawCommand.charAt(0);
-                int targetX = 0;
-                int targetY = 0;
-                switch (commande) {
-                    case 'w':
-                        targetY = -1;
-                        break;
+                for(int i = 0; i < rawCommand.length(); i++) {
+                    commande = rawCommand.charAt(i);
+                    int targetX = 0;
+                    int targetY = 0;
+                    switch (commande) {
+                        case 'w':
+                            targetY = -1;
+                            break;
 
-                    case 'a':
-                        targetX = -1;
-                        break;
+                        case 'a':
+                            targetX = -1;
+                            break;
 
-                    case 's':
-                        targetY = 1;
-                        break;
+                        case 's':
+                            targetY = 1;
+                            break;
 
-                    case 'd':
-                        targetX = 1;
-                        break;
+                        case 'd':
+                            targetX = 1;
+                            break;
 
-                    case 'c':
-                        int persoX = personnage.getX();
-                        int persoY = personnage.getY();
-                        for(int i = 0; i < CASES_INTERAGISSABLES.length; i++) {
-                            int interactionX = CASES_INTERAGISSABLES[i][0] + persoX;
-                            int interactionY = CASES_INTERAGISSABLES[i][1] + persoY;
-                            if(grille[interactionY][interactionX].isPeutInteragir()) {
-                                grille[interactionY][interactionX].action(personnage);
+                        case 'c':
+                            int persoX = personnage.getX();
+                            int persoY = personnage.getY();
+                            for(int j = 0; j < CASES_INTERAGISSABLES.length; j++) {
+                                int interactionX = CASES_INTERAGISSABLES[j][0] + persoX;
+                                int interactionY = CASES_INTERAGISSABLES[j][1] + persoY;
+                                if(grille[interactionY][interactionX].isPeutInteragir()) {
+                                    grille[interactionY][interactionX].action(personnage);
+                                }
                             }
-                        }
-                        break;
+                            break;
 
+                    }
+                    if(grille[personnage.getY() + targetY][personnage.getX() + targetX].getPeutMarcherDessus())
+                        personnage.bouger(targetX, targetY);
+                    for(Monstre monstre : monstres) {
+                        monstre.deplacer(personnage, grille);
+                    }
                 }
-                if(grille[personnage.getY() + targetY][personnage.getX() + targetX].getPeutMarcherDessus())
-                    personnage.bouger(targetX, targetY);
+
             }
         } while (commande != 'q');
 
     }
 
-    private void afficher () {
+    private void afficherGrille() {
         for(int i = 0; i < grille.length; i++) {
             for(int j = 0; j < grille[i].length; j++) {
                 boolean entiteDessus = false;

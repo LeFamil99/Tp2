@@ -13,22 +13,22 @@ public class Monstre extends Entite {
         int nouveauX = this.x;
         int nouveauY = this.y;
         if (aldez.x != this.x) {
-            nouveauX = this.x + aldez.x > this.x ? 1 : -1;
+            nouveauX = this.x + (aldez.x > this.x ? 1 : -1);
         }
         if (aldez.y != this.y) {
-            nouveauY = this.y + aldez.y > this.y ? 1 : -1;
+            nouveauY = this.y + (aldez.y > this.y ? 1 : -1);
         }
 
-        if (grille[nouveauX][nouveauY].getPeutMarcherDessus()) {
+        if (grille[nouveauY][nouveauX].getPeutMarcherDessus()) {
             this.x = nouveauX;
             this.y = nouveauY;
         }
-        /*
+
         else if (grille[nouveauY][this.x].getPeutMarcherDessus()) {
             this.x = nouveauX;
         } else if (grille[this.y][nouveauX].getPeutMarcherDessus()) {
             this.y = nouveauY;
         }
-        */
+
     }
 }

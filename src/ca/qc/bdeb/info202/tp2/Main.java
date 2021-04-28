@@ -7,7 +7,7 @@ public class Main {
     public static void main(String[] args) {
 
         Aldez a = new Aldez(0, 0);
-        Niveau niveau = new Niveau("4.txt", a);
+        Niveau niveau = new Niveau("6.txt", a);
 	    niveau.jouer();
 	 //Vlad
 
