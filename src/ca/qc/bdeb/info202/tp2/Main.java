@@ -1,10 +1,14 @@
 package ca.qc.bdeb.info202.tp2;
 
+import ca.qc.bdeb.info202.tp2.personnages.Aldez;
+
 public class Main {
 
     public static void main(String[] args) {
-	 Niveau niveau = new Niveau("4.txt");
-	 niveau.jouer();
+
+        Aldez a = new Aldez(0, 0);
+        Niveau niveau = new Niveau("4.txt", a);
+	    niveau.jouer();
 	 //Vlad
 
     }
