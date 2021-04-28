@@ -29,6 +29,11 @@ public abstract class Entite {
         return y;
     }
 
+    public void setPos(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+
     public int getPointVie() {
         return pointVie;
     }

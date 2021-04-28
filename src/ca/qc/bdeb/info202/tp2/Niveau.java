@@ -227,9 +227,11 @@ public class Niveau {
                         break;
 
                     case 'c':
+                        int persoX = personnage.getX();
+                        int persoY = personnage.getY();
                         for(int i = 0; i < CASES_INTERAGISSABLES.length; i++) {
-                            int interactionX = CASES_INTERAGISSABLES[i][0] + personnage.getX();
-                            int interactionY = CASES_INTERAGISSABLES[i][1] + personnage.getY();
+                            int interactionX = CASES_INTERAGISSABLES[i][0] + persoX;
+                            int interactionY = CASES_INTERAGISSABLES[i][1] + persoY;
                             if(grille[interactionY][interactionX].isPeutInteragir()) {
                                 grille[interactionY][interactionX].action(personnage);
                             }

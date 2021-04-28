@@ -25,7 +25,7 @@ public class Aldez extends Entite {
             utiliserCristal();
         }
     }
-    // CHANGER DE MANIERE QUE CE SOIR PLUS LOGIQUE
+
     private void boirePotionDeVie() {
         this.pointVie = VIE_MAXIMALE;
     }
@@ -37,5 +37,7 @@ public class Aldez extends Entite {
     private void utiliserCristal() {
         this.nbreCristaux++;
     }
+
+
 
 }
