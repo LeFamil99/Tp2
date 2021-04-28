@@ -16,6 +16,8 @@ public abstract class Tuile {
         this.peutMarcherDessus = peutMarcherDessus;
     }
 
+    public abstract void action();
+
     public boolean getPeutMarcherDessus() {
         return peutMarcherDessus;
     }

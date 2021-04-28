@@ -4,4 +4,9 @@ public class Plancher extends Tuile {
     public Plancher(int x, int y) {
         super(x, y, ' ', true);
     }
+
+    @Override
+    public void action() {
+
+    }
 }

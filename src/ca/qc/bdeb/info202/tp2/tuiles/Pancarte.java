@@ -6,4 +6,9 @@ public class Pancarte extends Tuile{
         super(x, y, '!', true);
         this.texte = texte;
     }
+
+    @Override
+    public void action() {
+        System.out.println(texte);
+    }
 }
