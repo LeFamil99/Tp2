@@ -24,10 +24,12 @@ public class Niveau {
     private int niveau;
     private final char[] COMMANDES_POSSIBLES = {'w', 'a', 's', 'd', 'c', 'x', 'q'};
 
-    public Niveau(String fichier) {
+    public Niveau(String fichier, Aldez a) {
         this.monstres = new ArrayList<>();
         this.objets = new ArrayList<>();
+        this.personnage = a;
         chargerNiveau(fichier);
+
     }
 
     /**

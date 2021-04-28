@@ -7,6 +7,7 @@ public abstract class Tuile {
     protected int x;
     protected int y;
     protected boolean peutMarcherDessus;
+    protected boolean peutInteragir;
     protected Entite entiteDessus;
 
     public Tuile(int x, int y, char symbole, boolean peutMarcherDessus) {
