@@ -44,9 +44,15 @@ public class Niveau {
 
             ArrayList<String[]> casesImportantes = lireElementsImportants(lecteur);
 
-            int y = 0;
+            int y = 1;
 
             String ligne = lecteur.readLine();
+
+            grille.add(new Tuile[ligne.length()]);
+
+            for (int i = 0; i < grille.get(0).length; i++) {
+                grille.get(0)[i] = new Mur(i, 0);
+            }
 
             while (ligne != null) {
                 ArrayList<Tuile> rangeDeTuile = new ArrayList<>();
