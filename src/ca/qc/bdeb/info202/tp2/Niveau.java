@@ -10,6 +10,7 @@ import ca.qc.bdeb.info202.tp2.tuiles.*;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Niveau {
@@ -21,6 +22,7 @@ public class Niveau {
     private ArrayList<Monstre> monstres;
     private ArrayList<Item> objets;
     private int niveau;
+    private final char[] COMMANDES_POSSIBLES = {'w', 'a', 's', 'd', 'c', 'x', 'q'};
 
     public Niveau(String fichier) {
         this.monstres = new ArrayList<>();
@@ -178,12 +180,42 @@ public class Niveau {
     }
 
     public void jouer() {
-        afficher();
+        char commande = 'a';
         Scanner scanner = new Scanner(System.in);
-        boolean erreur = false;
         do {
+            afficher();
+            boolean erreur = false;
+
             System.out.println("Veuillez entrer la commande: ");
-        }
+
+            String rawCommand = scanner.nextLine();
+            erreur = rawCommand.isEmpty();
+            if(erreur) {
+                System.out.println("Erreur: Commade invalide");
+            } else {
+                commande = rawCommand.charAt(0);
+                int targetX = 0;
+                int targetY = 0;
+                switch (commande) {
+                    case 'w':
+                        targetY = -1;
+                        break;
+
+                    case 'a':
+                        targetX = -1;
+                        break;
+
+                    case 's':
+                        targetY = 1;
+                        break;
+
+                    case 'd':
+                        targetX = 1;
+                        break;
+                }
+                personnage.bouger(targetX, targetY);
+            }
+        } while (commande != 'q');
 
     }
 
