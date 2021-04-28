@@ -1,5 +1,6 @@
 package ca.qc.bdeb.info202.tp2.tuiles;
 
+import ca.qc.bdeb.info202.tp2.personnages.Aldez;
 import ca.qc.bdeb.info202.tp2.personnages.Entite;
 
 public abstract class Tuile {
@@ -18,7 +19,7 @@ public abstract class Tuile {
         this.peutInteragir = peutInteragir;
     }
 
-    public abstract void action();
+    public abstract void action(Aldez aldez);
 
     public boolean getPeutMarcherDessus() {
         return peutMarcherDessus;

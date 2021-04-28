@@ -1,6 +1,7 @@
 package ca.qc.bdeb.info202.tp2.tuiles;
 
 import ca.qc.bdeb.info202.tp2.objets.Item;
+import ca.qc.bdeb.info202.tp2.personnages.Aldez;
 
 public class Tresor extends Tuile {
     private Item obj;
@@ -11,7 +12,7 @@ public class Tresor extends Tuile {
     }
 
     @Override
-    public void action() {
+    public void action(Aldez aldez) {
 
     }
 
