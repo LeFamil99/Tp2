@@ -181,12 +181,26 @@ public class Niveau {
     }
 
     private void afficher () {
-        for(Tuile[] rang : grille) {
-            for(Tuile tuile : rang) {
-                System.out.print(tuile.getSymbole());
+        for(int i = 0; i < grille.length; i++) {
+            for(int j = 0; j < grille[i].length; j++) {
+                boolean entiteDessus = false;
+                if(personnage.getX() == j && personnage.getY() == i) {
+                    System.out.print(personnage.getSymbole());
+                    entiteDessus = true;
+                } else {
+                    for(Monstre monstre : monstres) {
+                        if(monstre.getX() == j && monstre.getY() == i && !entiteDessus) {
+                            System.out.print(monstre.getSymbole());
+                            entiteDessus = true;
+                        }
+                    }
+                }
+                if(!entiteDessus)
+                    System.out.print(grille[i][j].getSymbole());
             }
             System.out.println();
         }
     }
+
 
 }
