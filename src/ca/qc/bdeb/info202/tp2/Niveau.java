@@ -23,6 +23,17 @@ public class Niveau {
     private ArrayList<Item> objets;
     private int niveau;
     private final char[] COMMANDES_POSSIBLES = {'w', 'a', 's', 'd', 'c', 'x', 'q'};
+    private final int[][] CASES_INTERAGISSABLES = {
+            {-1, -1},
+            {0, -1},
+            {1, -1},
+            {-1, 0},
+            {0, 0},
+            {1, 0},
+            {-1, 1},
+            {0, 1},
+            {1, 1},
+    };
 
     public Niveau(String fichier, Aldez a) {
         this.monstres = new ArrayList<>();
@@ -214,6 +225,17 @@ public class Niveau {
                     case 'd':
                         targetX = 1;
                         break;
+
+                    case 'c':
+                        for(int i = 0; i < CASES_INTERAGISSABLES.length; i++) {
+                            int interactionX = CASES_INTERAGISSABLES[i][0] + personnage.getX();
+                            int interactionY = CASES_INTERAGISSABLES[i][1] + personnage.getY();
+                            if(grille[interactionY][interactionX].isPeutInteragir()) {
+                                grille[interactionY][interactionX].action();
+                            }
+                        }
+                        break;
+
                 }
                 if(grille[personnage.getY() + targetY][personnage.getX() + targetX].getPeutMarcherDessus())
                     personnage.bouger(targetX, targetY);
