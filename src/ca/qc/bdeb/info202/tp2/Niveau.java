@@ -114,7 +114,7 @@ public class Niveau {
                     /* Personnage */
                     String[] parametres = donnees[0].split(",");
                     this.personnage = new Aldez(Integer.parseInt(parametres[0]),
-                            Integer.parseInt(parametres[1]), 1, 1);
+                            Integer.parseInt(parametres[1]));
                 } else if (donnees[0].equalsIgnoreCase("monstre")) {
                     /* Monstre */
                     String[] parametres = donnees[1].split(",");
