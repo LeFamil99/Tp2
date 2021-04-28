@@ -1,0 +1,11 @@
+2,3
+pancarte:5,3,Bienvenue au niveau 1! Pour passer au niveau 2, ouvre le trésor ($) avec C!
+tresor:17,5,CristalMagique
+####################
+#                  #
+#                  #
+#                  #
+#                  #
+#                  #
+#                  #
+####################

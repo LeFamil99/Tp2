@@ -1,0 +1,30 @@
+9,8
+monstre:7,11,1,2
+monstre:20,6,2,1
+monstre:3,1,2,1
+monstre:18,15,3,1
+teleporteur:3,3,21,18
+tresor:7,3,CristalMagique
+pancarte:21,5,Ne perds pas ton temps à lire les pancartes!! Il y a plein de monstres ici...
+tresor:2,15,PotionVie
+teleporteur:21,18,3,3
+########################
+#            ###   #####
+#            ###     ###
+#    ##     ####      ##
+#    ###    ####       #
+################       #
+###           #        #
+###                   ##
+###                  ###
+##                 #####
+#                 ######
+#          #      ######
+#   ###    ##     ######
+#   ###    #       #####
+#   ###             ####
+#   ###              ###
+#  #####             ###
+#########        ##   ##
+###########     ####  ##
+########################

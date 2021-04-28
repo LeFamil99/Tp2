@@ -1,0 +1,31 @@
+10,10
+monstre:1,1,2,2
+monstre:18,18,2,2
+monstre:3,18,2,2
+monstre:18,3,2,2
+monstre:10,1,2,2
+monstre:10,18,2,2
+tresor:3,3,CristalMagique
+tresor:17,3,PotionForce
+tresor:3,17,PotionForce
+tresor:17,17,PotionForce
+####################
+#                  #
+#                  #
+#                  #
+#                  #
+#                  #
+#                  #
+#                  #
+#                  #
+#                  #
+#                  #
+#                  #
+#                  #
+#                  #
+#                  #
+#                  #
+#                  #
+#                  #
+#                  #
+####################
