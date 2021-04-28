@@ -10,7 +10,6 @@ import ca.qc.bdeb.info202.tp2.tuiles.*;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class Niveau {
@@ -18,14 +17,15 @@ public class Niveau {
     // TUILLES NE POINTE PAS AUX OCCUPANTS.
 
     private Tuile[][] grille;
-    private Aldez personnage;
+    private Aldez aldez;
     private ArrayList<Monstre> monstres;
     private ArrayList<Item> objets;
     private int niveau;
     private final char[] COMMANDES_POSSIBLES = {'w', 'a', 's', 'd', 'c', 'x', 'q'};
 
-    public Niveau(String fichier) {
+    public Niveau(String fichier, Aldez aldez) {
         this.monstres = new ArrayList<>();
+        this.aldez = aldez;
         this.objets = new ArrayList<>();
         chargerNiveau(fichier);
     }
@@ -113,8 +113,8 @@ public class Niveau {
                 if (donnees.length == 1) {
                     /* Personnage */
                     String[] parametres = donnees[0].split(",");
-                    this.personnage = new Aldez(Integer.parseInt(parametres[0]),
-                            Integer.parseInt(parametres[1]), 1, 1);
+                    this.aldez.repositionner(Integer.parseInt(parametres[0]),
+                            Integer.parseInt(parametres[1]));
                 } else if (donnees[0].equalsIgnoreCase("monstre")) {
                     /* Monstre */
                     String[] parametres = donnees[1].split(",");
@@ -213,7 +213,7 @@ public class Niveau {
                         targetX = 1;
                         break;
                 }
-                personnage.bouger(targetX, targetY);
+                aldez.bouger(targetX, targetY);
             }
         } while (commande != 'q');
 
@@ -223,8 +223,8 @@ public class Niveau {
         for(int i = 0; i < grille.length; i++) {
             for(int j = 0; j < grille[i].length; j++) {
                 boolean entiteDessus = false;
-                if(personnage.getX() == j && personnage.getY() == i) {
-                    System.out.print(personnage.getSymbole());
+                if(aldez.getX() == j && aldez.getY() == i) {
+                    System.out.print(aldez.getSymbole());
                     entiteDessus = true;
                 } else {
                     for(Monstre monstre : monstres) {

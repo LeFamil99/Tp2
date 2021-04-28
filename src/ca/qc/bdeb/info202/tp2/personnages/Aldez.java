@@ -11,7 +11,7 @@ public class Aldez extends Entite {
 
     private int nbreCristaux = 0;
 
-    public Aldez(int x, int y, int a, int b) {
+    public Aldez(int x, int y) {
 
         super(x, y, VIE_MAXIMALE, ATTAQUE_INITIALE, '&');
     }
