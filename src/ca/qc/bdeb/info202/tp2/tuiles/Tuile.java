@@ -10,11 +10,12 @@ public abstract class Tuile {
     protected boolean peutInteragir;
     protected Entite entiteDessus;
 
-    public Tuile(int x, int y, char symbole, boolean peutMarcherDessus) {
+    public Tuile(int x, int y, char symbole, boolean peutMarcherDessus, boolean peutInteragir) {
         this.x = x;
         this.y = y;
         this.symbole = symbole;
         this.peutMarcherDessus = peutMarcherDessus;
+        this.peutInteragir = peutInteragir;
     }
 
     public abstract void action();
@@ -33,5 +34,9 @@ public abstract class Tuile {
 
     public boolean isPeutMarcherDessus() {
         return peutMarcherDessus;
+    }
+
+    public boolean isPeutInteragir() {
+        return peutInteragir;
     }
 }
