@@ -170,4 +170,17 @@ public class Niveau {
         range.add(new Plancher(x, y));
     }
 
+    public void jouer() {
+        afficher();
+    }
+
+    private void afficher () {
+        for(Tuile[] rang : grille) {
+            for(Tuile tuile : rang) {
+                System.out.print(tuile.getSymbole());
+            }
+            System.out.println();
+        }
+    }
+
 }
