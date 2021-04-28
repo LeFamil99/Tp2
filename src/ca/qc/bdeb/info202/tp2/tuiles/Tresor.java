@@ -6,7 +6,7 @@ public class Tresor extends Tuile {
     private Item obj;
     private boolean estOuvert = false;
     public Tresor(int x, int y, Item obj) {
-        super(x, y, '$', false);
+        super(x, y, '$', false, true);
         this.obj = obj;
     }
 

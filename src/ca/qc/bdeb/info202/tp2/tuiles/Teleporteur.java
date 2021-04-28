@@ -5,7 +5,7 @@ public class Teleporteur extends Tuile {
     private int destinationX;
 
     public Teleporteur(int x, int y, int destinationX, int destinationY) {
-        super(x, y, '*', true);
+        super(x, y, '*', true, true);
         this.destinationX = destinationX;
         this.destinationY = destinationY;
     }
