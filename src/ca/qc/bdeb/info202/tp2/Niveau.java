@@ -279,6 +279,7 @@ public class Niveau {
                             chargerNiveau(niveau + ".txt");
                         } else {
                             Messages.afficherVictoire();
+                            quitter = true;
                         }
                     }
                 }
