@@ -270,8 +270,13 @@ public class Niveau {
                     if(grille[aldez.getY() + targetY][aldez.getX() + targetX].getPeutMarcherDessus())
                         aldez.bouger(targetX, targetY);
 
-                    for(Monstre monstre : monstres)
+                    for(Monstre monstre : monstres) {
                         monstre.action(aldez, grille);
+                        if (aldez.getPointVie() <= 0) {
+                            Messages.afficherDefaite();
+                            quitter = true;
+                        }
+                    }
 
                     if(aldez.getNbreCristaux() == niveau) {
                         System.out.println("Bravo! Vous avez trouvé le crystal magique! Vous passez au niveau " + niveau++ + ".");
