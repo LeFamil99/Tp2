@@ -1,6 +1,8 @@
 package ca.qc.bdeb.info202.tp2.personnages;
 
-public abstract class Entite {
+import java.io.Serializable;
+
+public abstract class Entite implements Serializable {
     protected int x;
     protected int y;
     protected int pointVie;

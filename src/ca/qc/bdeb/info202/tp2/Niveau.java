@@ -12,16 +12,13 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Niveau {
-
-    // TUILLES NE POINTE PAS AUX OCCUPANTS.
+public class Niveau implements Serializable {
 
     private Tuile[][] grille;
     private Aldez aldez;
     private ArrayList<Monstre> monstres;
     private ArrayList<Item> objets;
     private int niveau;
-    //private final char[] COMMANDES_POSSIBLES = {'w', 'a', 's', 'd', 'c', 'x', 'q'};
     private final int[][] CASES_INTERAGISSABLES = {
             {-1, -1},
             {0, -1},

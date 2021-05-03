@@ -3,7 +3,9 @@ package ca.qc.bdeb.info202.tp2.tuiles;
 import ca.qc.bdeb.info202.tp2.personnages.Aldez;
 import ca.qc.bdeb.info202.tp2.personnages.Entite;
 
-public abstract class Tuile {
+import java.io.Serializable;
+
+public abstract class Tuile implements Serializable {
     protected char symbole;
     protected int x;
     protected int y;

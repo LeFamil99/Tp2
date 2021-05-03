@@ -2,7 +2,9 @@ package ca.qc.bdeb.info202.tp2.objets;
 
 import ca.qc.bdeb.info202.tp2.personnages.Aldez;
 
-public abstract class Item {
+import java.io.Serializable;
+
+public abstract class Item implements Serializable {
 
     protected int x, y;
 

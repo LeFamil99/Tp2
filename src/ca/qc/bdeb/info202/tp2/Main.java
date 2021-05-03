@@ -9,7 +9,5 @@ public class Main {
         Aldez a = new Aldez(0, 0);
         Niveau niveau = new Niveau(a);
 	    niveau.jouer();
-	 //Vlad
-
     }
 }
