@@ -11,7 +11,7 @@ public class Monstre extends Entite {
     public void action(Aldez aldez, Tuile[][] grille) {
         int distX = this.x - aldez.x;
         int distY = this.y - aldez.y;
-        if (Math.sqrt(Math.pow(distX, 2) + Math.pow(distX, 2)) <= 1) {
+        if (Math.sqrt(Math.pow(distX, 2) + Math.pow(distY, 2)) <= 1) {
             aldez.pointVie--;
         } else {
             deplacer(aldez, grille);
@@ -40,4 +40,7 @@ public class Monstre extends Entite {
             this.y = nouveauY;
         }
     }
+
+
+
 }

@@ -217,6 +217,8 @@ public class Niveau {
                     commande = rawCommand.charAt(i);
                     int targetX = 0;
                     int targetY = 0;
+                    int persoX = aldez.getX();
+                    int persoY = aldez.getY();
                     switch (commande) {
                         case 'w':
                             targetY = -1;
@@ -235,13 +237,27 @@ public class Niveau {
                             break;
 
                         case 'c':
-                            int persoX = aldez.getX();
-                            int persoY = aldez.getY();
                             for(int j = 0; j < CASES_INTERAGISSABLES.length; j++) {
                                 int interactionX = CASES_INTERAGISSABLES[j][0] + persoX;
                                 int interactionY = CASES_INTERAGISSABLES[j][1] + persoY;
                                 if(grille[interactionY][interactionX].isPeutInteragir()) {
                                     grille[interactionY][interactionX].action(aldez);
+                                }
+                            }
+                            break;
+
+                        case 'x':
+                            for(int j = 0; j < CASES_INTERAGISSABLES.length; j++) {
+                                int interactionX = CASES_INTERAGISSABLES[j][0] + persoX;
+                                int interactionY = CASES_INTERAGISSABLES[j][1] + persoY;
+                                for(int k = 0; k < monstres.size(); k++) {
+                                    if(monstres.get(i).getX() == interactionX && monstres.get(i).getY() == interactionY) {
+                                        aldez.attaquer(monstres.get(i));
+                                        if(monstres.get(i).getPointVie() <= 0) {
+                                            monstres.remove(monstres.get(i));
+                                        }
+                                    }
+
                                 }
                             }
                             break;
@@ -255,7 +271,7 @@ public class Niveau {
                         aldez.bouger(targetX, targetY);
 
                     for(Monstre monstre : monstres)
-                        monstre.deplacer(aldez, grille);
+                        monstre.action(aldez, grille);
 
                     if(aldez.getNbreCristaux() == niveau) {
                         System.out.println("Bravo! Vous avez trouvé le crystal magique! Vous passez au niveau " + niveau++ + ".");

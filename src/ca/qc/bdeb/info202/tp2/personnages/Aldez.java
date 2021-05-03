@@ -47,4 +47,8 @@ public class Aldez extends Entite {
     public int getNbreCristaux() {
         return nbreCristaux;
     }
+
+    public void attaquer(Monstre monstre) {
+        monstre.pointVie -= this.pointForce;
+    }
 }
