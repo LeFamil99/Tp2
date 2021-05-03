@@ -197,13 +197,14 @@ public class Niveau {
     }
 
     public void jouer() {
-        char commande = 'a';
+        char commande;
         boolean quitter = false;
         Scanner scanner = new Scanner(System.in);
         do {
-            System.out.println("Vies: " + aldez.getPointVie() + "/" + Aldez.getVieMaximale() + "\t\t\tForce: " + aldez.getPointForce() + "\t\t\tCrystaux: " + aldez.getNbreCristaux());
+            System.out.println("Vies: " + aldez.getPointVie() + "/" + Aldez.getVieMaximale() + "\t\t\tForce: " +
+                    aldez.getPointForce() + "\t\t\tCrystaux: " + aldez.getNbreCristaux());
             afficherGrille();
-            boolean erreur = false;
+            boolean erreur;
 
             System.out.println("Veuillez entrer la commande: ");
 
@@ -258,7 +259,11 @@ public class Niveau {
 
                     if(aldez.getNbreCristaux() == niveau) {
                         System.out.println("Bravo! Vous avez trouvé le crystal magique! Vous passez au niveau " + niveau++ + ".");
-                        chargerNiveau(niveau + ".txt");
+                        if (niveau <= 6) {
+                            chargerNiveau(niveau + ".txt");
+                        } else {
+                            Messages.afficherVictoire();
+                        }
                     }
                 }
 

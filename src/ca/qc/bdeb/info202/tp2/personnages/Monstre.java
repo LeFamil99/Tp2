@@ -8,6 +8,16 @@ public class Monstre extends Entite {
         super(x, y, pointsDeVie, pointsDeForce, '@');
     }
 
+    public void action(Aldez aldez, Tuile[][] grille) {
+        int distX = this.x - aldez.x;
+        int distY = this.y - aldez.y;
+        if (Math.sqrt(Math.pow(distX, 2) + Math.pow(distX, 2)) <= 1) {
+            aldez.pointVie--;
+        } else {
+            deplacer(aldez, grille);
+        }
+    }
+
     public void deplacer(Aldez aldez, Tuile[][] grille) {
 
         int nouveauX = this.x;
@@ -29,6 +39,5 @@ public class Monstre extends Entite {
         } else if (grille[this.y][nouveauX].getPeutMarcherDessus()) {
             this.y = nouveauY;
         }
-
     }
 }
