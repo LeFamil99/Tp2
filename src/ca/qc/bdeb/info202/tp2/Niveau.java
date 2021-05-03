@@ -31,6 +31,8 @@ public class Niveau implements Serializable {
             {1, 1},
     };
 
+    private final String FICHIER_SAUVEGARDE = "partie.sav";
+
     public Niveau(Aldez a) {
         this.monstres = new ArrayList<>();
         this.objets = new ArrayList<>();
@@ -313,5 +315,31 @@ public class Niveau implements Serializable {
         }
     }
 
+    public void sauvegarder() {
+        try (FileOutputStream fos = new FileOutputStream(FICHIER_SAUVEGARDE)) {
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
 
+            oos.writeObject(this);
+        } catch (IOException e) {
+            System.out.println("Erreur lors de la sauvegarde. ");
+        }
+    }
+
+    public void chargerNiveau() {
+        try (FileInputStream fis = new FileInputStream(FICHIER_SAUVEGARDE)) {
+            ObjectInputStream ois = new ObjectInputStream(fis);
+
+            Niveau niveau = (Niveau) ois.readObject();
+            this.niveau = niveau.niveau;
+            this.aldez = niveau.aldez;
+            this.objets = niveau.objets;
+            this.monstres = niveau.monstres;
+            this.grille = niveau.grille;
+
+        } catch (IOException e) {
+            System.out.println("Erreur lors de la sauvegarde. ");
+        } catch (ClassNotFoundException e) {
+            System.out.println("Erreur, la classe demande est introuvable. ");
+        }
+    }
 }
