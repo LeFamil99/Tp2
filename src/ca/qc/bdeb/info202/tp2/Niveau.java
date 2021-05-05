@@ -286,8 +286,8 @@ public class Niveau implements Serializable {
                         Messages.afficherDefaite();
                         quitter = true;
                     }
-
-                    if(aldez.getNbreCristaux() == niveau) {
+                    
+                    if(aldez.getNbreCristaux() == niveau && !quitter) {
                         System.out.println("Bravo! Vous avez trouvé le crystal magique! Vous passez au niveau " + niveau++ + ".");
                         if (niveau <= 6) {
                             chargerNiveau(niveau + ".txt");
