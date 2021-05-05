@@ -199,6 +199,9 @@ public class Niveau implements Serializable {
         char commande;
         boolean quitter = false;
         Scanner scanner = new Scanner(System.in);
+
+        verifierSauvegarde(scanner);
+
         do {
             System.out.println("Vies: " + aldez.getPointVie() + "/" + Aldez.getVieMaximale() + "\t\t\tForce: " +
                     aldez.getPointForce() + "\t\t\tCrystaux: " + aldez.getNbreCristaux());
@@ -250,6 +253,7 @@ public class Niveau implements Serializable {
                                 int interactionX = CASES_INTERAGISSABLES[j][0] + persoX;
                                 int interactionY = CASES_INTERAGISSABLES[j][1] + persoY;
                                 for(int k = 0; k < monstres.size(); k++) {
+                                    // RETIRE LES MONSTRES LORS DUNE LOOP
                                     if(monstres.get(i).getX() == interactionX && monstres.get(i).getY() == interactionY) {
                                         aldez.attaquer(monstres.get(i));
                                         if(monstres.get(i).getPointVie() <= 0) {
@@ -262,6 +266,12 @@ public class Niveau implements Serializable {
                             break;
 
                         case 'q':
+                            System.out.println("Voulez-vous sauvegarder la partie? o/n");
+
+                            String reponse = scanner.nextLine();
+                            if (reponse.charAt(0) == 'o') {
+                                sauvegarder();
+                            }
                             quitter = true;
                             break;
 
@@ -290,7 +300,19 @@ public class Niveau implements Serializable {
 
             }
         } while (!quitter);
+    }
 
+    private void verifierSauvegarde(Scanner scanner) {
+
+        File sauvegarde = new File(FICHIER_SAUVEGARDE);
+
+        if (sauvegarde.isFile()) {
+            System.out.println("Voulez-vous continuer la dernière partie? o/n");
+
+            if (scanner.nextLine().charAt(0) == 'o') {
+                chargerSauvegarde();
+            }
+        }
     }
 
     private void afficherGrille() {
@@ -325,7 +347,7 @@ public class Niveau implements Serializable {
         }
     }
 
-    public void chargerNiveau() {
+    public void chargerSauvegarde() {
         try (FileInputStream fis = new FileInputStream(FICHIER_SAUVEGARDE)) {
             ObjectInputStream ois = new ObjectInputStream(fis);
 
