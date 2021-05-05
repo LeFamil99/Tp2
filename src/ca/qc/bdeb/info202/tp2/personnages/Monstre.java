@@ -29,15 +29,15 @@ public class Monstre extends Entite {
             nouveauY = this.y + (aldez.y > this.y ? 1 : -1);
         }
 
-        if (grille[nouveauY][nouveauX].getPeutMarcherDessus()) {
+        if (grille[nouveauY][nouveauX].peutMarcherDessus()) {
             this.x = nouveauX;
             this.y = nouveauY;
         }
 
-        else if (grille[nouveauY][this.x].getPeutMarcherDessus()) {
-            this.x = nouveauX;
-        } else if (grille[this.y][nouveauX].getPeutMarcherDessus()) {
+        else if (grille[nouveauY][this.x].peutMarcherDessus()) {
             this.y = nouveauY;
+        } else if (grille[this.y][nouveauX].peutMarcherDessus()) {
+            this.x = nouveauX;
         }
     }
 

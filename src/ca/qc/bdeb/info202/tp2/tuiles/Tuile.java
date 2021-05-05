@@ -23,7 +23,7 @@ public abstract class Tuile implements Serializable {
 
     public abstract void action(Aldez aldez);
 
-    public boolean getPeutMarcherDessus() {
+    public boolean peutMarcherDessus() {
         return peutMarcherDessus;
     }
 
@@ -33,10 +33,6 @@ public abstract class Tuile implements Serializable {
 
     public char getSymbole() {
         return symbole;
-    }
-
-    public boolean isPeutMarcherDessus() {
-        return peutMarcherDessus;
     }
 
     public boolean isPeutInteragir() {

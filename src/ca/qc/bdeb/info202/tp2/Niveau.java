@@ -253,11 +253,10 @@ public class Niveau implements Serializable {
                                 int interactionX = CASES_INTERAGISSABLES[j][0] + persoX;
                                 int interactionY = CASES_INTERAGISSABLES[j][1] + persoY;
                                 for(int k = 0; k < monstres.size(); k++) {
-                                    // RETIRE LES MONSTRES LORS DUNE LOOP
-                                    if(monstres.get(i).getX() == interactionX && monstres.get(i).getY() == interactionY) {
-                                        aldez.attaquer(monstres.get(i));
-                                        if(monstres.get(i).getPointVie() <= 0) {
-                                            monstres.remove(monstres.get(i));
+                                    if(monstres.get(k).getX() == interactionX && monstres.get(k).getY() == interactionY) {
+                                        aldez.attaquer(monstres.get(k));
+                                        if(monstres.get(k).getPointVie() <= 0) {
+                                            monstres.remove(monstres.get(k));
                                         }
                                     }
 
@@ -276,15 +275,16 @@ public class Niveau implements Serializable {
                             break;
 
                     }
-                    if(grille[aldez.getY() + targetY][aldez.getX() + targetX].getPeutMarcherDessus())
+                    if(grille[aldez.getY() + targetY][aldez.getX() + targetX].peutMarcherDessus())
                         aldez.bouger(targetX, targetY);
 
                     for(Monstre monstre : monstres) {
                         monstre.action(aldez, grille);
-                        if (aldez.getPointVie() <= 0) {
-                            Messages.afficherDefaite();
-                            quitter = true;
-                        }
+                    }
+
+                    if (aldez.getPointVie() <= 0) {
+                        Messages.afficherDefaite();
+                        quitter = true;
                     }
 
                     if(aldez.getNbreCristaux() == niveau) {
