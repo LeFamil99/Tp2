@@ -4,14 +4,14 @@ import ca.qc.bdeb.info202.tp2.objets.Item;
 import ca.qc.bdeb.info202.tp2.objets.PotionForce;
 import ca.qc.bdeb.info202.tp2.objets.PotionVie;
 
-public class Aldez extends Entite {
+public class Adlez extends Entite {
 
     private final static int VIE_MAXIMALE = 6;
     private final static int ATTAQUE_INITIALE = 1;
 
     private int nbreCristaux = 0;
 
-    public Aldez(int x, int y) {
+    public Adlez(int x, int y) {
 
         super(x, y, VIE_MAXIMALE, ATTAQUE_INITIALE, '&');
     }

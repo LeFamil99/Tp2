@@ -1,7 +1,7 @@
 package ca.qc.bdeb.info202.tp2.tuiles;
 
 import ca.qc.bdeb.info202.tp2.objets.Item;
-import ca.qc.bdeb.info202.tp2.personnages.Aldez;
+import ca.qc.bdeb.info202.tp2.personnages.Adlez;
 
 public class Tresor extends Tuile {
     private Item obj;
@@ -12,10 +12,10 @@ public class Tresor extends Tuile {
     }
 
     @Override
-    public void action(Aldez aldez) {
+    public void action(Adlez adlez) {
         if(!estOuvert) {
             estOuvert = true;
-            aldez.utiliserItem(obj);
+            adlez.utiliserItem(obj);
         }
     }
 

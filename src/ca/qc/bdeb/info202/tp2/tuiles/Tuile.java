@@ -1,6 +1,6 @@
 package ca.qc.bdeb.info202.tp2.tuiles;
 
-import ca.qc.bdeb.info202.tp2.personnages.Aldez;
+import ca.qc.bdeb.info202.tp2.personnages.Adlez;
 import ca.qc.bdeb.info202.tp2.personnages.Entite;
 
 import java.io.Serializable;
@@ -21,7 +21,7 @@ public abstract class Tuile implements Serializable {
         this.peutInteragir = peutInteragir;
     }
 
-    public abstract void action(Aldez aldez);
+    public abstract void action(Adlez adlez);
 
     public boolean peutMarcherDessus() {
         return peutMarcherDessus;

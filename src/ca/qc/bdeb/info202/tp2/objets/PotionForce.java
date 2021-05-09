@@ -1,6 +1,6 @@
 package ca.qc.bdeb.info202.tp2.objets;
 
-import ca.qc.bdeb.info202.tp2.personnages.Aldez;
+import ca.qc.bdeb.info202.tp2.personnages.Adlez;
 
 public class PotionForce extends Item {
 
@@ -9,7 +9,7 @@ public class PotionForce extends Item {
     }
 
     @Override
-    public void utiliser(Aldez aldez) {
+    public void utiliser(Adlez adlez) {
 
     }
 

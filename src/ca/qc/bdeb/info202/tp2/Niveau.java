@@ -4,7 +4,7 @@ import ca.qc.bdeb.info202.tp2.objets.CristalMagique;
 import ca.qc.bdeb.info202.tp2.objets.Item;
 import ca.qc.bdeb.info202.tp2.objets.PotionForce;
 import ca.qc.bdeb.info202.tp2.objets.PotionVie;
-import ca.qc.bdeb.info202.tp2.personnages.Aldez;
+import ca.qc.bdeb.info202.tp2.personnages.Adlez;
 import ca.qc.bdeb.info202.tp2.personnages.Monstre;
 import ca.qc.bdeb.info202.tp2.tuiles.*;
 
@@ -15,7 +15,7 @@ import java.util.Scanner;
 public class Niveau implements Serializable {
 
     private Tuile[][] grille;
-    private Aldez aldez;
+    private Adlez adlez;
     private ArrayList<Monstre> monstres;
     private ArrayList<Item> objets;
     private int niveau;
@@ -35,12 +35,12 @@ public class Niveau implements Serializable {
 
     /**
      * Initialise un niveau.
-     * @param aldez
+     * @param adlez
      */
-    public Niveau(Aldez aldez) {
+    public Niveau(Adlez adlez) {
         this.monstres = new ArrayList<>();
         this.objets = new ArrayList<>();
-        this.aldez = aldez;
+        this.adlez = adlez;
         niveau = 1;
         chargerNiveau(niveau + ".txt");
 
@@ -51,7 +51,7 @@ public class Niveau implements Serializable {
      * en paramètre.
      * @param fichier
      */
-    private void chargerNiveau(String fichier) {
+    public void chargerNiveau(String fichier) {
 
         /* Les monstres et aldez ne sont pas ajoute dans la grille, a la place, il faudra les inserer apres les
          * avoir bouger et avant des des afficher, pour ensuite les retirers. Cela permet de facilement les afficher
@@ -130,7 +130,7 @@ public class Niveau implements Serializable {
                 if (donnees.length == 1) {
                     /* Personnage */
                     String[] parametres = donnees[0].split(",");
-                    this.aldez.repositionner(Integer.parseInt(parametres[0]),
+                    this.adlez.repositionner(Integer.parseInt(parametres[0]),
                             Integer.parseInt(parametres[1]));
                 } else if (donnees[0].equalsIgnoreCase("monstre")) {
                     /* Monstre */
@@ -211,8 +211,8 @@ public class Niveau implements Serializable {
         verifierSauvegarde(scanner);
 
         do {
-            System.out.println("Vies: " + aldez.getPointVie() + "/" + Aldez.getVieMaximale() + "\t\t\tForce: " +
-                    aldez.getPointForce() + "\t\t\tCrystaux: " + aldez.getNbreCristaux());
+            System.out.println("Vies: " + adlez.getPointVie() + "/" + Adlez.getVieMaximale() + "\t\t\tForce: " +
+                    adlez.getPointForce() + "\t\t\tCrystaux: " + adlez.getNbreCristaux());
             afficherGrille();
             boolean erreur;
 
@@ -227,8 +227,8 @@ public class Niveau implements Serializable {
                     commande = rawCommand.charAt(i);
                     int targetX = 0;
                     int targetY = 0;
-                    int persoX = aldez.getX();
-                    int persoY = aldez.getY();
+                    int persoX = adlez.getX();
+                    int persoY = adlez.getY();
                     switch (commande) {
                         case 'w':
                             targetY = -1;
@@ -251,7 +251,7 @@ public class Niveau implements Serializable {
                                 int interactionX = casesInteragissable[0] + persoX;
                                 int interactionY = casesInteragissable[1] + persoY;
                                 if (grille[interactionY][interactionX].isPeutInteragir()) {
-                                    grille[interactionY][interactionX].action(aldez);
+                                    grille[interactionY][interactionX].action(adlez);
                                 }
                             }
                             break;
@@ -263,7 +263,7 @@ public class Niveau implements Serializable {
                                 for (int k = 0; k < monstres.size(); k++) {
                                     if (monstres.get(k).getX() == interactionX &&
                                             monstres.get(k).getY() == interactionY) {
-                                        aldez.attaquer(monstres.get(k));
+                                        adlez.attaquer(monstres.get(k));
                                         if (monstres.get(k).getPointVie() <= 0) {
                                             monstres.remove(monstres.get(k));
                                         }
@@ -284,19 +284,19 @@ public class Niveau implements Serializable {
                             break;
 
                     }
-                    if(grille[aldez.getY() + targetY][aldez.getX() + targetX].peutMarcherDessus())
-                        aldez.bouger(targetX, targetY);
+                    if(grille[adlez.getY() + targetY][adlez.getX() + targetX].peutMarcherDessus())
+                        adlez.bouger(targetX, targetY);
 
                     for(Monstre monstre : monstres) {
-                        monstre.action(aldez, grille);
+                        monstre.action(adlez, grille);
                     }
 
-                    if (aldez.getPointVie() <= 0) {
+                    if (adlez.getPointVie() <= 0) {
                         Messages.afficherDefaite();
                         quitter = true;
                     }
 
-                    if(aldez.getNbreCristaux() == niveau && !quitter) {
+                    if(adlez.getNbreCristaux() == niveau && !quitter) {
                         System.out.println("Bravo! Vous avez trouvé le crystal magique! Vous passez au niveau " +
                                 niveau++ + ".");
                         if (niveau <= 6) {
@@ -333,12 +333,12 @@ public class Niveau implements Serializable {
     /**
      * Afficher la grille de tuile en placant Adlez et les monstres aux bons endroits.
      */
-    private void afficherGrille() {
+    public void afficherGrille() {
         for(int i = 0; i < grille.length; i++) {
             for(int j = 0; j < grille[i].length; j++) {
                 boolean entiteDessus = false;
-                if(aldez.getX() == j && aldez.getY() == i) {
-                    System.out.print(aldez.getSymbole());
+                if(adlez.getX() == j && adlez.getY() == i) {
+                    System.out.print(adlez.getSymbole());
                     entiteDessus = true;
                 } else {
                     for(Monstre monstre : monstres) {
@@ -359,7 +359,7 @@ public class Niveau implements Serializable {
      * Sauvegarde le niveau.
      * Sérialise le niveau dans le fichier de sauvegarde <partie.sav>
      */
-    private void sauvegarder() {
+    public void sauvegarder() {
         try (FileOutputStream fos = new FileOutputStream(FICHIER_SAUVEGARDE)) {
             ObjectOutputStream oos = new ObjectOutputStream(fos);
 
@@ -379,7 +379,7 @@ public class Niveau implements Serializable {
 
             Niveau niveau = (Niveau) ois.readObject();
             this.niveau = niveau.niveau;
-            this.aldez = niveau.aldez;
+            this.adlez = niveau.adlez;
             this.objets = niveau.objets;
             this.monstres = niveau.monstres;
             this.grille = niveau.grille;

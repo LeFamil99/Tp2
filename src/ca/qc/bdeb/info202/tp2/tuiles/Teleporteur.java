@@ -1,6 +1,6 @@
 package ca.qc.bdeb.info202.tp2.tuiles;
 
-import ca.qc.bdeb.info202.tp2.personnages.Aldez;
+import ca.qc.bdeb.info202.tp2.personnages.Adlez;
 
 public class Teleporteur extends Tuile {
     private int destinationY;
@@ -13,7 +13,7 @@ public class Teleporteur extends Tuile {
     }
 
     @Override
-    public void action(Aldez aldez) {
-        aldez.setPos(destinationX, destinationY);
+    public void action(Adlez adlez) {
+        adlez.setPos(destinationX, destinationY);
     }
 }
