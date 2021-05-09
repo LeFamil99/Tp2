@@ -33,10 +33,14 @@ public class Niveau implements Serializable {
 
     private final String FICHIER_SAUVEGARDE = "partie.sav";
 
-    public Niveau(Aldez a) {
+    /**
+     * Initialise un niveau.
+     * @param aldez
+     */
+    public Niveau(Aldez aldez) {
         this.monstres = new ArrayList<>();
         this.objets = new ArrayList<>();
-        this.aldez = a;
+        this.aldez = aldez;
         niveau = 1;
         chargerNiveau(niveau + ".txt");
 
@@ -162,10 +166,10 @@ public class Niveau implements Serializable {
     /**
      * Permet d'insérer la bonne tuile, lorsque le charactère dans le fichier est un espace. La tuile
      * peut soit être une pancarte, un trésor ou un téléporteur.
-     * @param range
+     * @param range la range de tuile à remplir.
      * @param x
      * @param y
-     * @param tuilesPotentielles
+     * @param tuilesPotentielles les données des tuiles spéciales pouvant se trouver sur un espace.
      */
     private void chargerCaseVide(ArrayList<Tuile> range, int x, int y, ArrayList<String[]> tuilesPotentielles) {
 
@@ -195,6 +199,10 @@ public class Niveau implements Serializable {
         range.add(new Plancher(x, y));
     }
 
+    /**
+     * Permet de jouer à The Legend of Adlez et de lire les commandes de
+     * l'utilisateur.
+     */
     public void jouer() {
         char commande;
         boolean quitter = false;
@@ -239,23 +247,24 @@ public class Niveau implements Serializable {
                             break;
 
                         case 'c':
-                            for(int j = 0; j < CASES_INTERAGISSABLES.length; j++) {
-                                int interactionX = CASES_INTERAGISSABLES[j][0] + persoX;
-                                int interactionY = CASES_INTERAGISSABLES[j][1] + persoY;
-                                if(grille[interactionY][interactionX].isPeutInteragir()) {
+                            for (int[] casesInteragissable : CASES_INTERAGISSABLES) {
+                                int interactionX = casesInteragissable[0] + persoX;
+                                int interactionY = casesInteragissable[1] + persoY;
+                                if (grille[interactionY][interactionX].isPeutInteragir()) {
                                     grille[interactionY][interactionX].action(aldez);
                                 }
                             }
                             break;
 
                         case 'x':
-                            for(int j = 0; j < CASES_INTERAGISSABLES.length; j++) {
-                                int interactionX = CASES_INTERAGISSABLES[j][0] + persoX;
-                                int interactionY = CASES_INTERAGISSABLES[j][1] + persoY;
-                                for(int k = 0; k < monstres.size(); k++) {
-                                    if(monstres.get(k).getX() == interactionX && monstres.get(k).getY() == interactionY) {
+                            for (int[] cases_interagissable : CASES_INTERAGISSABLES) {
+                                int interactionX = cases_interagissable[0] + persoX;
+                                int interactionY = cases_interagissable[1] + persoY;
+                                for (int k = 0; k < monstres.size(); k++) {
+                                    if (monstres.get(k).getX() == interactionX &&
+                                            monstres.get(k).getY() == interactionY) {
                                         aldez.attaquer(monstres.get(k));
-                                        if(monstres.get(k).getPointVie() <= 0) {
+                                        if (monstres.get(k).getPointVie() <= 0) {
                                             monstres.remove(monstres.get(k));
                                         }
                                     }
@@ -303,6 +312,11 @@ public class Niveau implements Serializable {
         } while (!quitter);
     }
 
+    /**
+     * Détermine si un fichier de sauvegarde existe déjà et si c'est le cas,
+     * demande à l'utilisateur s'il veut reprendre la partie dans le fichier de sauvegarde.
+     * @param scanner pour prendre la réponse de l'utilisateur
+     */
     private void verifierSauvegarde(Scanner scanner) {
 
         File sauvegarde = new File(FICHIER_SAUVEGARDE);
@@ -316,6 +330,9 @@ public class Niveau implements Serializable {
         }
     }
 
+    /**
+     * Afficher la grille de tuile en placant Adlez et les monstres aux bons endroits.
+     */
     private void afficherGrille() {
         for(int i = 0; i < grille.length; i++) {
             for(int j = 0; j < grille[i].length; j++) {
@@ -338,7 +355,11 @@ public class Niveau implements Serializable {
         }
     }
 
-    public void sauvegarder() {
+    /**
+     * Sauvegarde le niveau.
+     * Sérialise le niveau dans le fichier de sauvegarde <partie.sav>
+     */
+    private void sauvegarder() {
         try (FileOutputStream fos = new FileOutputStream(FICHIER_SAUVEGARDE)) {
             ObjectOutputStream oos = new ObjectOutputStream(fos);
 
@@ -348,6 +369,10 @@ public class Niveau implements Serializable {
         }
     }
 
+    /**
+     * Charge la sauvegarde.
+     * Set tous les paramètres à l'objet sérialiser dans le fichier <partie.sav>
+     */
     public void chargerSauvegarde() {
         try (FileInputStream fis = new FileInputStream(FICHIER_SAUVEGARDE)) {
             ObjectInputStream ois = new ObjectInputStream(fis);
