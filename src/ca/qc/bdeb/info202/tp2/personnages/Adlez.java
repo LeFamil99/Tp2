@@ -11,19 +11,30 @@ public class Adlez extends Entite {
 
     private int nbreCristaux = 0;
 
+    /**
+     * Initialise Adlez
+     * @param x position en x
+     * @param y position en y
+     */
     public Adlez(int x, int y) {
 
         super(x, y, VIE_MAXIMALE, ATTAQUE_INITIALE, '&');
     }
 
+    public void gagnerCristal() {
+        nbreCristaux++;
+    }
+
+    public void renforcer() {
+        pointForce++;
+    }
+
+    public void revigorer() {
+        pointVie = VIE_MAXIMALE;
+    }
+
     public void utiliserItem(Item item) {
-        if (item.getClass() == PotionVie.class) {
-            boirePotionDeVie();
-        } else if (item.getClass() == PotionForce.class) {
-            boirePotionDeForce();
-        } else {
-            utiliserCristal();
-        }
+        item.utiliser(this);
     }
 
     private void boirePotionDeVie() {
@@ -48,6 +59,10 @@ public class Adlez extends Entite {
         return nbreCristaux;
     }
 
+    /**
+     * Attaque un monstre et baisse ses points de vies par les points de force d'Adlez.
+     * @param monstre monstre à attaquer
+     */
     public void attaquer(Monstre monstre) {
         monstre.pointVie -= this.pointForce;
     }

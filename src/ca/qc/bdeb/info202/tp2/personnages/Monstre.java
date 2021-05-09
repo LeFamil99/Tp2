@@ -17,9 +17,9 @@ public class Monstre extends Entite {
 
     /**
      * Détermine l'action que le monstre doit effectuer et l'effectue.
-     * Le monstre bougera vers adlez s'il est loin de lui et l'attaquera s'il est proche.
-     * @param adlez
-     * @param grille de tuiles
+     * Le monstre bougera vers Adlez s'il est loin de lui et l'attaquera s'il est proche.
+     * @param adlez joueur
+     * @param grille tuiles du niveau
      */
     public void action(Adlez adlez, Tuile[][] grille) {
         int distX = this.x - adlez.x;
@@ -33,8 +33,8 @@ public class Monstre extends Entite {
 
     /**
      * Déplacement du monstre vers adlez.
-     * @param adlez
-     * @param grille de tuiles
+     * @param adlez joueur
+     * @param grille tuiles du niveau
      */
     private void deplacer(Adlez adlez, Tuile[][] grille) {
 

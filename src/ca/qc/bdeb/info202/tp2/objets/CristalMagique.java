@@ -11,7 +11,7 @@ public class CristalMagique extends Item {
 
     @Override
     public void utiliser(Adlez adlez) {
-
+        adlez.gagnerCristal();
     }
 
 }

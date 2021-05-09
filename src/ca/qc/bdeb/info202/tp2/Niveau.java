@@ -53,7 +53,7 @@ public class Niveau implements Serializable {
      */
     public void chargerNiveau(String fichier) {
 
-        /* Les monstres et aldez ne sont pas ajoute dans la grille, a la place, il faudra les inserer apres les
+        /* Les monstres et Adlez ne sont pas ajoute dans la grille, a la place, il faudra les inserer apres les
          * avoir bouger et avant des des afficher, pour ensuite les retirers. Cela permet de facilement les afficher
          * avec le moins de modification a la grille possible. */
 
@@ -112,7 +112,7 @@ public class Niveau implements Serializable {
     }
 
     /**
-     * Lit le début du fichier des niveaux. Crée Aldez et les monstres et retourne les paramètres des tuiles
+     * Lit le début du fichier des niveaux. Crée Adlez et les monstres et retourne les paramètres des tuiles
      * spéciales comme les trésors, les téléporteurs et les pancartes, afin de les ajouter plus tard au bon
      * endroit dans le niveau.
      * @param lecteur
@@ -277,7 +277,7 @@ public class Niveau implements Serializable {
                             System.out.println("Voulez-vous sauvegarder la partie? o/n");
 
                             String reponse = scanner.nextLine();
-                            if (reponse.charAt(0) == 'o') {
+                            if (reponse.length() > 0 && reponse.charAt(0) == 'o') {
                                 sauvegarder();
                             }
                             quitter = true;
@@ -298,7 +298,7 @@ public class Niveau implements Serializable {
 
                     if(adlez.getNbreCristaux() == niveau && !quitter) {
                         System.out.println("Bravo! Vous avez trouvé le crystal magique! Vous passez au niveau " +
-                                niveau++ + ".");
+                                ++niveau + ".");
                         if (niveau <= 6) {
                             chargerNiveau(niveau + ".txt");
                         } else {
@@ -324,7 +324,9 @@ public class Niveau implements Serializable {
         if (sauvegarde.isFile()) {
             System.out.println("Voulez-vous continuer la dernière partie? o/n");
 
-            if (scanner.nextLine().charAt(0) == 'o') {
+            String reponse = scanner.nextLine();
+
+            if (reponse.length() > 0 && reponse.charAt(0) == 'o') {
                 chargerSauvegarde();
             }
         }

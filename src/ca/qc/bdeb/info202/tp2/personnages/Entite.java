@@ -36,6 +36,14 @@ public abstract class Entite implements Serializable {
         this.y = y;
     }
 
+    public void setPointVie(int pointVie) {
+        this.pointVie = pointVie;
+    }
+
+    public void setPointForce(int pointForce) {
+        this.pointForce = pointForce;
+    }
+
     public int getPointVie() {
         return pointVie;
     }

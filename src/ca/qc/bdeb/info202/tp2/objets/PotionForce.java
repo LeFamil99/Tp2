@@ -10,7 +10,7 @@ public class PotionForce extends Item {
 
     @Override
     public void utiliser(Adlez adlez) {
-
+        adlez.renforcer();
     }
 
 }
