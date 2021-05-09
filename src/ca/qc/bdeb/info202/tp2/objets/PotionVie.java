@@ -10,7 +10,7 @@ public class PotionVie extends Item {
 
     @Override
     public void utiliser(Adlez adlez) {
-        adlez.revigorer();
+        adlez.setPointVie(Adlez.getVieMaximale());
     }
 
 }

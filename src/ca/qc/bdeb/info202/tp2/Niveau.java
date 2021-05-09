@@ -17,7 +17,6 @@ public class Niveau implements Serializable {
     private Tuile[][] grille;
     private Adlez adlez;
     private ArrayList<Monstre> monstres;
-    private ArrayList<Item> objets;
     private int niveau;
     private final int[][] CASES_INTERAGISSABLES = {
             {-1, -1},
@@ -39,7 +38,6 @@ public class Niveau implements Serializable {
      */
     public Niveau(Adlez adlez) {
         this.monstres = new ArrayList<>();
-        this.objets = new ArrayList<>();
         this.adlez = adlez;
         niveau = 1;
         chargerNiveau(niveau + ".txt");
@@ -180,14 +178,15 @@ public class Niveau implements Serializable {
                     range.add(new Pancarte(x, y, tuile[3]));
                 } else if (tuile[0].equalsIgnoreCase("tresor")) {
                     // CRISTAL
+                    Item item = null;
                     if (tuile[3].equalsIgnoreCase("CristalMagique")) {
-                        this.objets.add(new CristalMagique(x, y));
+                        item = new CristalMagique(x, y);
                     } else if (tuile[3].equalsIgnoreCase("PotionVie")) {
-                        this.objets.add(new PotionVie(x, y));
-                    } else if (tuile[3].equalsIgnoreCase("PotionForce")) {
-                        this.objets.add(new PotionForce(x, y));
+                        item = new PotionVie(x, y);
+                    } else {
+                        item = new PotionForce(x, y);
                     }
-                    range.add(new Tresor(x, y, this.objets.get(this.objets.size() - 1)));
+                    range.add(new Tresor(x, y, item));
                 } else if (tuile[0].equalsIgnoreCase("teleporteur")) {
                     range.add(new Teleporteur(x, y, Integer.parseInt(tuile[3]), Integer.parseInt(tuile[4])));
                 }
@@ -382,7 +381,6 @@ public class Niveau implements Serializable {
             Niveau niveau = (Niveau) ois.readObject();
             this.niveau = niveau.niveau;
             this.adlez = niveau.adlez;
-            this.objets = niveau.objets;
             this.monstres = niveau.monstres;
             this.grille = niveau.grille;
 

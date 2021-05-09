@@ -1,8 +1,6 @@
 package ca.qc.bdeb.info202.tp2.personnages;
 
 import ca.qc.bdeb.info202.tp2.objets.Item;
-import ca.qc.bdeb.info202.tp2.objets.PotionForce;
-import ca.qc.bdeb.info202.tp2.objets.PotionVie;
 
 public class Adlez extends Entite {
 
@@ -21,38 +19,23 @@ public class Adlez extends Entite {
         super(x, y, VIE_MAXIMALE, ATTAQUE_INITIALE, '&');
     }
 
-    public void gagnerCristal() {
-        nbreCristaux++;
-    }
-
-    public void renforcer() {
-        pointForce++;
-    }
-
-    public void revigorer() {
-        pointVie = VIE_MAXIMALE;
-    }
-
+    /**
+     * Permet d'utiliser un item trouvé.
+     * @param item item à utiliser, trouvé dans un trésor.
+     */
     public void utiliserItem(Item item) {
         item.utiliser(this);
     }
 
-    private void boirePotionDeVie() {
-        this.pointVie = VIE_MAXIMALE;
-        System.out.println(pointVie);
-    }
-
-    private void boirePotionDeForce() {
-        this.pointForce++;
-        System.out.println(pointForce);
-    }
-
-    private void utiliserCristal() {
-        this.nbreCristaux++;
-    }
-
     public static int getVieMaximale() {
         return VIE_MAXIMALE;
+    }
+
+    /**
+     * Obtention d'un cristal. Le nombre de cristal d'Adlez augmente de 1.
+     */
+    public void gagnerCristal() {
+        nbreCristaux++;
     }
 
     public int getNbreCristaux() {
