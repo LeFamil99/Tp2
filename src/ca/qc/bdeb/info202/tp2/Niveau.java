@@ -81,9 +81,10 @@ public class Niveau implements Serializable {
                     int x = 0;
 
                     for (char tuile : ligne.toCharArray()) {
-                        switch (tuile) {
-                            case '#' -> rangeDeTuile.add(new Mur(x, y));
-                            default -> chargerCaseVide(rangeDeTuile, x, y, casesImportantes);
+                        if (tuile == '#') {
+                            rangeDeTuile.add(new Mur(x, y));
+                        } else {
+                            chargerCaseVide(rangeDeTuile, x, y, casesImportantes);
                         }
 
                         x++;
