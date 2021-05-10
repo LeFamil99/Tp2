@@ -249,7 +249,7 @@ public class Niveau implements Serializable {
                             for (int[] casesInteragissable : CASES_INTERAGISSABLES) {
                                 int interactionX = casesInteragissable[0] + persoX;
                                 int interactionY = casesInteragissable[1] + persoY;
-                                if (grille[interactionY][interactionX].isPeutInteragir()) {
+                                if (grille[interactionY][interactionX].peutInteragir()) {
                                     grille[interactionY][interactionX].action(adlez);
                                 }
                             }
