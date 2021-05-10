@@ -17,7 +17,6 @@ public class Niveau implements Serializable {
     private Tuile[][] grille;
     private Adlez adlez;
     private ArrayList<Monstre> monstres;
-    private ArrayList<Item> objets;
     private int niveau;
     private final int[][] CASES_INTERAGISSABLES = {
             {-1, -1},
