@@ -209,7 +209,6 @@ public class Niveau implements Serializable {
         Scanner scanner = new Scanner(System.in);
 
         Messages.afficherIntro();
-
         verifierSauvegarde(scanner);
 
         do {
@@ -219,36 +218,38 @@ public class Niveau implements Serializable {
             boolean erreur;
 
             System.out.println("Veuillez entrer la commande: ");
-
-            String rawCommand = scanner.nextLine();
-            erreur = rawCommand.isEmpty();
+            //La variable commandeBrute permet de vérifier que la commande est valide
+            //pour éviter une Exception
+            String commandeBrute = scanner.nextLine();
+            erreur = commandeBrute.isEmpty();
             if(erreur) {
                 System.out.println("Erreur: la commande ne peut pas être vide");
             } else {
-                for(int i = 0; i < rawCommand.length() && !quitter; i++) {
-                    commande = rawCommand.charAt(i);
-                    int targetX = 0;
-                    int targetY = 0;
+                for(int i = 0; i < commandeBrute.length() && !quitter; i++) {
+                    commande = commandeBrute.charAt(i);
+                    int objectifX = 0; //Position en x du personnage après le tour
+                    int objectifY = 0; //Position en y du personnage après le tour
                     int persoX = adlez.getX();
                     int persoY = adlez.getY();
                     switch (commande) {
                         case 'w':
-                            targetY = -1;
+                            objectifY = -1;
                             break;
 
                         case 'a':
-                            targetX = -1;
+                            objectifX = -1;
                             break;
 
                         case 's':
-                            targetY = 1;
+                            objectifY = 1;
                             break;
 
                         case 'd':
-                            targetX = 1;
+                            objectifX = 1;
                             break;
 
                         case 'c':
+                            // Boucle for permettant d'interagir avec tous les élément interagissables autour
                             for (int[] casesInteragissable : CASES_INTERAGISSABLES) {
                                 int interactionX = casesInteragissable[0] + persoX;
                                 int interactionY = casesInteragissable[1] + persoY;
@@ -259,6 +260,7 @@ public class Niveau implements Serializable {
                             break;
 
                         case 'x':
+                            // Boucle for permettant d'attaquer tous les monstres autour du personnage
                             for (int[] cases_interagissable : CASES_INTERAGISSABLES) {
                                 int interactionX = cases_interagissable[0] + persoX;
                                 int interactionY = cases_interagissable[1] + persoY;
@@ -275,7 +277,7 @@ public class Niveau implements Serializable {
                             }
                             break;
 
-                        case 'q':
+                        case 'q': //Quitter le jeu
                             System.out.println("Voulez-vous sauvegarder la partie? o/n");
 
                             String reponse = scanner.nextLine();
@@ -286,25 +288,28 @@ public class Niveau implements Serializable {
                             break;
 
                     }
-                    if(grille[adlez.getY() + targetY][adlez.getX() + targetX].peutMarcherDessus())
-                        adlez.bouger(targetX, targetY);
+                    //Bouger le personnage
+                    if(grille[adlez.getY() + objectifY][adlez.getX() + objectifX].peutMarcherDessus())
+                        adlez.bouger(objectifX, objectifY);
 
+                    //Faire jouer les monstres
                     for(Monstre monstre : monstres) {
                         monstre.action(adlez, grille);
                     }
 
+                    //Afficher la défaite, s'il y a lieu
                     if (adlez.getPointVie() <= 0) {
                         Messages.afficherDefaite();
                         quitter = true;
                     }
 
                     if(adlez.getNbreCristaux() == niveau && !quitter) {
-                    // AJOUTER CHECK POUR QUITTER
+                        //Afficher le message de passage de niveau
                         if (niveau < 6) {
                             System.out.println("Bravo! Vous avez trouvé le crystal magique! Vous passez au niveau " +
                                 ++niveau + ".");
                             chargerNiveau(niveau + ".txt");
-                        } else {
+                        } else { //Afficher le message de victoire
                             Messages.afficherVictoire();
                             quitter = true;
                         }
