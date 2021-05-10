@@ -10,5 +10,6 @@ public class Main {
         Niveau niveau = new Niveau(a);
 
 	    niveau.jouer();
+
     }
 }

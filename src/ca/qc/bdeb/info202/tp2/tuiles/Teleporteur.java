@@ -24,6 +24,6 @@ public class Teleporteur extends Tuile {
      */
     @Override
     public void action(Adlez adlez) {
-        adlez.setPos(destinationX, destinationY);
+        adlez.repositionner(destinationX, destinationY);
     }
 }

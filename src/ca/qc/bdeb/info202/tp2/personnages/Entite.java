@@ -2,6 +2,10 @@ package ca.qc.bdeb.info202.tp2.personnages;
 
 import java.io.Serializable;
 
+/**
+ * Représentation d'une entité qui peut se déplacer
+ * et faire des actions dans le niveau
+ */
 public abstract class Entite implements Serializable {
     protected int x;
     protected int y;
@@ -9,7 +13,14 @@ public abstract class Entite implements Serializable {
     protected int pointForce;
     protected char symbole;
 
-
+    /**
+     * Initialise une entité
+     * @param x
+     * @param y
+     * @param vie Nombre de points de vie de l'entité
+     * @param force Nombre de points de force de l'entité
+     * @param symbole charactère à afficher pour représenter l'entité
+     */
     public Entite(int x, int y, int vie, int force, char symbole) {
         this.x = x;
         this.y = y;
@@ -18,6 +29,11 @@ public abstract class Entite implements Serializable {
         this.symbole = symbole;
     }
 
+    /**
+     * Changer la position de l'entité
+     * @param x
+     * @param y
+     */
     public void repositionner(int x, int y) {
         this.x = x;
         this.y = y;
@@ -39,11 +55,6 @@ public abstract class Entite implements Serializable {
         return y;
     }
 
-    public void setPos(int x, int y) {
-        this.x = x;
-        this.y = y;
-    }
-
     public int getPointVie() {
         return pointVie;
     }
@@ -56,6 +67,11 @@ public abstract class Entite implements Serializable {
         return symbole;
     }
 
+    /**
+     * Bouger l'entité en x et y
+     * @param x
+     * @param y
+     */
     public void bouger (int x, int y) {
         this.x += x;
         this.y += y;
