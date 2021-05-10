@@ -200,6 +200,7 @@ public class Niveau implements Serializable {
         boolean quitter = false;
         Scanner scanner = new Scanner(System.in);
 
+        Messages.afficherIntro();
         verifierSauvegarde(scanner);
 
         do {
@@ -287,6 +288,7 @@ public class Niveau implements Serializable {
                         quitter = true;
                     }
 
+                    // AJOUTER CHECK POUR QUITTER
                     if(aldez.getNbreCristaux() == niveau) {
                         System.out.println("Bravo! Vous avez trouvé le crystal magique! Vous passez au niveau " + niveau++ + ".");
                         if (niveau <= 6) {
