@@ -1,6 +1,6 @@
 package ca.qc.bdeb.info202.tp2.objets;
 
-import ca.qc.bdeb.info202.tp2.personnages.Aldez;
+import ca.qc.bdeb.info202.tp2.personnages.Adlez;
 
 import java.io.Serializable;
 
@@ -13,6 +13,6 @@ public abstract class Item implements Serializable {
         this.y = y;
     }
 
-    public abstract void utiliser(Aldez aldez);
+    public abstract void utiliser(Adlez adlez);
 
 }

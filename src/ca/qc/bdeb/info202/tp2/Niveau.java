@@ -4,7 +4,7 @@ import ca.qc.bdeb.info202.tp2.objets.CristalMagique;
 import ca.qc.bdeb.info202.tp2.objets.Item;
 import ca.qc.bdeb.info202.tp2.objets.PotionForce;
 import ca.qc.bdeb.info202.tp2.objets.PotionVie;
-import ca.qc.bdeb.info202.tp2.personnages.Aldez;
+import ca.qc.bdeb.info202.tp2.personnages.Adlez;
 import ca.qc.bdeb.info202.tp2.personnages.Monstre;
 import ca.qc.bdeb.info202.tp2.tuiles.*;
 
@@ -15,7 +15,7 @@ import java.util.Scanner;
 public class Niveau implements Serializable {
 
     private Tuile[][] grille;
-    private Aldez aldez;
+    private Adlez adlez;
     private ArrayList<Monstre> monstres;
     private ArrayList<Item> objets;
     private int niveau;
@@ -33,10 +33,13 @@ public class Niveau implements Serializable {
 
     private final String FICHIER_SAUVEGARDE = "partie.sav";
 
-    public Niveau(Aldez a) {
+    /**
+     * Initialise un niveau.
+     * @param adlez
+     */
+    public Niveau(Adlez adlez) {
         this.monstres = new ArrayList<>();
-        this.objets = new ArrayList<>();
-        this.aldez = a;
+        this.adlez = adlez;
         niveau = 1;
         chargerNiveau(niveau + ".txt");
 
@@ -47,9 +50,9 @@ public class Niveau implements Serializable {
      * en paramètre.
      * @param fichier
      */
-    private void chargerNiveau(String fichier) {
+    public void chargerNiveau(String fichier) {
 
-        /* Les monstres et aldez ne sont pas ajoute dans la grille, a la place, il faudra les inserer apres les
+        /* Les monstres et Adlez ne sont pas ajoute dans la grille, a la place, il faudra les inserer apres les
          * avoir bouger et avant des des afficher, pour ensuite les retirers. Cela permet de facilement les afficher
          * avec le moins de modification a la grille possible. */
 
@@ -108,7 +111,7 @@ public class Niveau implements Serializable {
     }
 
     /**
-     * Lit le début du fichier des niveaux. Crée Aldez et les monstres et retourne les paramètres des tuiles
+     * Lit le début du fichier des niveaux. Crée Adlez et les monstres et retourne les paramètres des tuiles
      * spéciales comme les trésors, les téléporteurs et les pancartes, afin de les ajouter plus tard au bon
      * endroit dans le niveau.
      * @param lecteur
@@ -126,7 +129,7 @@ public class Niveau implements Serializable {
                 if (donnees.length == 1) {
                     /* Personnage */
                     String[] parametres = donnees[0].split(",");
-                    this.aldez.repositionner(Integer.parseInt(parametres[0]),
+                    this.adlez.repositionner(Integer.parseInt(parametres[0]),
                             Integer.parseInt(parametres[1]));
                 } else if (donnees[0].equalsIgnoreCase("monstre")) {
                     /* Monstre */
@@ -162,10 +165,10 @@ public class Niveau implements Serializable {
     /**
      * Permet d'insérer la bonne tuile, lorsque le charactère dans le fichier est un espace. La tuile
      * peut soit être une pancarte, un trésor ou un téléporteur.
-     * @param range
+     * @param range la range de tuile à remplir.
      * @param x
      * @param y
-     * @param tuilesPotentielles
+     * @param tuilesPotentielles les données des tuiles spéciales pouvant se trouver sur un espace.
      */
     private void chargerCaseVide(ArrayList<Tuile> range, int x, int y, ArrayList<String[]> tuilesPotentielles) {
 
@@ -176,14 +179,15 @@ public class Niveau implements Serializable {
                     range.add(new Pancarte(x, y, tuile[3]));
                 } else if (tuile[0].equalsIgnoreCase("tresor")) {
                     // CRISTAL
+                    Item item = null;
                     if (tuile[3].equalsIgnoreCase("CristalMagique")) {
-                        this.objets.add(new CristalMagique(x, y));
+                        item = new CristalMagique(x, y);
                     } else if (tuile[3].equalsIgnoreCase("PotionVie")) {
-                        this.objets.add(new PotionVie(x, y));
-                    } else if (tuile[3].equalsIgnoreCase("PotionForce")) {
-                        this.objets.add(new PotionForce(x, y));
+                        item = new PotionVie(x, y);
+                    } else {
+                        item = new PotionForce(x, y);
                     }
-                    range.add(new Tresor(x, y, this.objets.get(this.objets.size() - 1)));
+                    range.add(new Tresor(x, y, item));
                 } else if (tuile[0].equalsIgnoreCase("teleporteur")) {
                     range.add(new Teleporteur(x, y, Integer.parseInt(tuile[3]), Integer.parseInt(tuile[4])));
                 }
@@ -195,17 +199,20 @@ public class Niveau implements Serializable {
         range.add(new Plancher(x, y));
     }
 
+    /**
+     * Permet de jouer à The Legend of Adlez et de lire les commandes de
+     * l'utilisateur.
+     */
     public void jouer() {
         char commande;
         boolean quitter = false;
         Scanner scanner = new Scanner(System.in);
 
-        Messages.afficherIntro();
         verifierSauvegarde(scanner);
 
         do {
-            System.out.println("Vies: " + aldez.getPointVie() + "/" + Aldez.getVieMaximale() + "\t\t\tForce: " +
-                    aldez.getPointForce() + "\t\t\tCrystaux: " + aldez.getNbreCristaux());
+            System.out.println("Vies: " + adlez.getPointVie() + "/" + Adlez.getVieMaximale() + "\t\t\tForce: " +
+                    adlez.getPointForce() + "\t\t\tCrystaux: " + adlez.getNbreCristaux());
             afficherGrille();
             boolean erreur;
 
@@ -220,8 +227,8 @@ public class Niveau implements Serializable {
                     commande = rawCommand.charAt(i);
                     int targetX = 0;
                     int targetY = 0;
-                    int persoX = aldez.getX();
-                    int persoY = aldez.getY();
+                    int persoX = adlez.getX();
+                    int persoY = adlez.getY();
                     switch (commande) {
                         case 'w':
                             targetY = -1;
@@ -240,23 +247,24 @@ public class Niveau implements Serializable {
                             break;
 
                         case 'c':
-                            for(int j = 0; j < CASES_INTERAGISSABLES.length; j++) {
-                                int interactionX = CASES_INTERAGISSABLES[j][0] + persoX;
-                                int interactionY = CASES_INTERAGISSABLES[j][1] + persoY;
-                                if(grille[interactionY][interactionX].isPeutInteragir()) {
-                                    grille[interactionY][interactionX].action(aldez);
+                            for (int[] casesInteragissable : CASES_INTERAGISSABLES) {
+                                int interactionX = casesInteragissable[0] + persoX;
+                                int interactionY = casesInteragissable[1] + persoY;
+                                if (grille[interactionY][interactionX].peutInteragir()) {
+                                    grille[interactionY][interactionX].action(adlez);
                                 }
                             }
                             break;
 
                         case 'x':
-                            for(int j = 0; j < CASES_INTERAGISSABLES.length; j++) {
-                                int interactionX = CASES_INTERAGISSABLES[j][0] + persoX;
-                                int interactionY = CASES_INTERAGISSABLES[j][1] + persoY;
-                                for(int k = 0; k < monstres.size(); k++) {
-                                    if(monstres.get(k).getX() == interactionX && monstres.get(k).getY() == interactionY) {
-                                        aldez.attaquer(monstres.get(k));
-                                        if(monstres.get(k).getPointVie() <= 0) {
+                            for (int[] cases_interagissable : CASES_INTERAGISSABLES) {
+                                int interactionX = cases_interagissable[0] + persoX;
+                                int interactionY = cases_interagissable[1] + persoY;
+                                for (int k = 0; k < monstres.size(); k++) {
+                                    if (monstres.get(k).getX() == interactionX &&
+                                            monstres.get(k).getY() == interactionY) {
+                                        adlez.attaquer(monstres.get(k));
+                                        if (monstres.get(k).getPointVie() <= 0) {
                                             monstres.remove(monstres.get(k));
                                         }
                                     }
@@ -269,29 +277,30 @@ public class Niveau implements Serializable {
                             System.out.println("Voulez-vous sauvegarder la partie? o/n");
 
                             String reponse = scanner.nextLine();
-                            if (reponse.charAt(0) == 'o') {
+                            if (reponse.length() > 0 && reponse.charAt(0) == 'o') {
                                 sauvegarder();
                             }
                             quitter = true;
                             break;
 
                     }
-                    if(grille[aldez.getY() + targetY][aldez.getX() + targetX].peutMarcherDessus())
-                        aldez.bouger(targetX, targetY);
+                    if(grille[adlez.getY() + targetY][adlez.getX() + targetX].peutMarcherDessus())
+                        adlez.bouger(targetX, targetY);
 
                     for(Monstre monstre : monstres) {
-                        monstre.action(aldez, grille);
+                        monstre.action(adlez, grille);
                     }
 
-                    if (aldez.getPointVie() <= 0) {
+                    if (adlez.getPointVie() <= 0) {
                         Messages.afficherDefaite();
                         quitter = true;
                     }
 
+                    if(adlez.getNbreCristaux() == niveau && !quitter) {
+                        System.out.println("Bravo! Vous avez trouvé le crystal magique! Vous passez au niveau " +
+                                ++niveau + ".");
                     // AJOUTER CHECK POUR QUITTER
-                    if(aldez.getNbreCristaux() == niveau) {
-                        System.out.println("Bravo! Vous avez trouvé le crystal magique! Vous passez au niveau " + niveau++ + ".");
-                        if (niveau <= 6) {
+                    if (niveau <= 6) {
                             chargerNiveau(niveau + ".txt");
                         } else {
                             Messages.afficherVictoire();
@@ -304,6 +313,11 @@ public class Niveau implements Serializable {
         } while (!quitter);
     }
 
+    /**
+     * Détermine si un fichier de sauvegarde existe déjà et si c'est le cas,
+     * demande à l'utilisateur s'il veut reprendre la partie dans le fichier de sauvegarde.
+     * @param scanner pour prendre la réponse de l'utilisateur
+     */
     private void verifierSauvegarde(Scanner scanner) {
 
         File sauvegarde = new File(FICHIER_SAUVEGARDE);
@@ -311,18 +325,23 @@ public class Niveau implements Serializable {
         if (sauvegarde.isFile()) {
             System.out.println("Voulez-vous continuer la dernière partie? o/n");
 
-            if (scanner.nextLine().charAt(0) == 'o') {
+            String reponse = scanner.nextLine();
+
+            if (reponse.length() > 0 && reponse.charAt(0) == 'o') {
                 chargerSauvegarde();
             }
         }
     }
 
-    private void afficherGrille() {
+    /**
+     * Afficher la grille de tuile en placant Adlez et les monstres aux bons endroits.
+     */
+    public void afficherGrille() {
         for(int i = 0; i < grille.length; i++) {
             for(int j = 0; j < grille[i].length; j++) {
                 boolean entiteDessus = false;
-                if(aldez.getX() == j && aldez.getY() == i) {
-                    System.out.print(aldez.getSymbole());
+                if(adlez.getX() == j && adlez.getY() == i) {
+                    System.out.print(adlez.getSymbole());
                     entiteDessus = true;
                 } else {
                     for(Monstre monstre : monstres) {
@@ -339,6 +358,10 @@ public class Niveau implements Serializable {
         }
     }
 
+    /**
+     * Sauvegarde le niveau.
+     * Sérialise le niveau dans le fichier de sauvegarde <partie.sav>
+     */
     public void sauvegarder() {
         try (FileOutputStream fos = new FileOutputStream(FICHIER_SAUVEGARDE)) {
             ObjectOutputStream oos = new ObjectOutputStream(fos);
@@ -349,14 +372,17 @@ public class Niveau implements Serializable {
         }
     }
 
+    /**
+     * Charge la sauvegarde.
+     * Set tous les paramètres à l'objet sérialiser dans le fichier <partie.sav>
+     */
     public void chargerSauvegarde() {
         try (FileInputStream fis = new FileInputStream(FICHIER_SAUVEGARDE)) {
             ObjectInputStream ois = new ObjectInputStream(fis);
 
             Niveau niveau = (Niveau) ois.readObject();
             this.niveau = niveau.niveau;
-            this.aldez = niveau.aldez;
-            this.objets = niveau.objets;
+            this.adlez = niveau.adlez;
             this.monstres = niveau.monstres;
             this.grille = niveau.grille;
 
