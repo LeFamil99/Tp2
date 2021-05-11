@@ -1,3 +1,9 @@
+/*
+Travail pratique 2 - The Legend of Adlez
+Thierry Champion
+Maxime Gaudreau
+ */
+
 package ca.qc.bdeb.info202.tp2;
 
 import ca.qc.bdeb.info202.tp2.personnages.Adlez;
