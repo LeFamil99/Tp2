@@ -2,6 +2,11 @@ package ca.qc.bdeb.info202.tp2.personnages;
 
 import ca.qc.bdeb.info202.tp2.tuiles.Tuile;
 
+/**
+ * Représente un monstre qui peut se trouver dans un niveau.
+ * Son but est d'éliminer Adlez.
+ * @see ca.qc.bdeb.info202.tp2.personnages.Entite
+ */
 public class Monstre extends Entite {
 
     /**

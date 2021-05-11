@@ -12,6 +12,11 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Représente un niveau.
+ * Dans le niveau, Adlez se déplace et dois éviter les monstres tout en ouvrant des trésors
+ * et en ramassant des items.
+ */
 public class Niveau implements Serializable {
 
     private Tuile[][] grille;

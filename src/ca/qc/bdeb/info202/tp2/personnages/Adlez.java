@@ -2,6 +2,11 @@ package ca.qc.bdeb.info202.tp2.personnages;
 
 import ca.qc.bdeb.info202.tp2.objets.Item;
 
+/**
+ * Représente une Adlez, le héro.
+ * Est contrôler par le joueur.
+ * @see ca.qc.bdeb.info202.tp2.personnages.Entite
+ */
 public class Adlez extends Entite {
 
     private final static int VIE_MAXIMALE = 6;

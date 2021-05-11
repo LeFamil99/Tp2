@@ -4,6 +4,9 @@ import ca.qc.bdeb.info202.tp2.personnages.Adlez;
 
 import java.io.Serializable;
 
+/**
+ * Représente l'objet obtenu en ouvrant un trésor.
+ */
 public abstract class Item implements Serializable {
 
     protected int x, y;
